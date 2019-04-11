@@ -1,4 +1,4 @@
-function [gameMoves, ifWon]=connect4F(aggregateMoves, numTimesWon)
+function [gameMoves, ifWon]=connect4F(aggregateMoves)
 %clc
 %clear
 gameMoves = zeros(1, 21);
