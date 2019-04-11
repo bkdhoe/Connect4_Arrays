@@ -19,7 +19,7 @@ games=0;
 for(iSims=0:numSims-1)
     ifWon=0;
 	while ifWon~=1
-		[gameMoves, ifWon]=connect4F(aggregateMoves, iSims);
+		[gameMoves, ifWon]=connect4F(aggregateMoves);
         games=games+1;
     end
   aggregateMoves=[aggregateMoves gameMoves];
@@ -29,7 +29,7 @@ wins=0;
 losses=0;
 draws=0;
 for(jSims=0:numSims-1)
-  [gameMoves, ifWon]=connect4F(aggregateMoves, 1000);
+  [gameMoves, ifWon]=connect4F(aggregateMoves);
   if ifWon==1
       wins=wins+1;
   elseif ifWon==0
