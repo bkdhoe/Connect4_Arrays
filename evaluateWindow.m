@@ -1,5 +1,5 @@
 function [score]= evaluateWindow(window, piece)
-	score = 0;
+	 score = 0;
     numPiece = 0;
     numOpp = 0;
     numEmpt = 0;
@@ -34,7 +34,8 @@ function [score]= evaluateWindow(window, piece)
     
 	if numOpp == 3 && numEmpt == 1
 		score = score -  4;
+    end
     
-    
+     
 end
     

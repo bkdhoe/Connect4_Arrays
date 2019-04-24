@@ -4,8 +4,8 @@
 % Prof. McWilliams
 % Updated: 4/10/2019
 
-clc
-clear
+
+
 % Sets both players to wins of 0
 p1WinCount = 0;
 p2WinCount = 0;

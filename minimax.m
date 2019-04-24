@@ -29,7 +29,7 @@ function [column, value]=minimax(board, depth, alpha, beta, maximizingPlayer)
     
     if maximizingPlayer
         value=-Inf;
-        column = randi(size(validLocations,2));
+        column = validLocations(randi(size(validLocations,2)));
         for col=validLocations
             row=canPlayHere(col, board);
             boardCopy=board;
@@ -47,7 +47,7 @@ function [column, value]=minimax(board, depth, alpha, beta, maximizingPlayer)
         return
     else % minimizing player
         value=-Inf;
-        column = randi(size(validLocations,2));
+        column = validLocations(randi(size(validLocations,2)));
         for col=validLocations
             row=canPlayHere(col, board);
             boardCopy=board;
