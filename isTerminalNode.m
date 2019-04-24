@@ -1,3 +1,2 @@
-function bool =  isTerminalNode(board)
-	bool =  gameWon(board, 1) || gameWon(board, 2) || len(getValidLocations(board)) == 0;
-end
+function isTerminal=isTerminalNode(board)
+    isTerminal = gameWon(board, 1) || gameWon(board, 2) || size(getValidLocations, 2)==-1;
