@@ -1,8 +1,11 @@
 function validLocations=getValidLocations(board)
-    validLocations=-1;
+    validLocations =[];
     for(col=1:7)
-        if(canMoveHere(col)~=-1)
-            validLocations(size(board, 2));
-            count=count+1;
+        if(canPlayHere(col, board)~=-1)
+            validLocations(size(validLocations, 2)+1)=col;
         end
+    end
+    
+    if(size(validLocations, 2)==0)
+        validLocations=-1;
     end

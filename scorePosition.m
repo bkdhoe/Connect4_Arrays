@@ -13,37 +13,38 @@ function score =  scorePosition(board, piece)
     for r = 1:6
         for c = 1:4
             rowArray = board(r,:);
-			window = rowArray(c:c+4);
+			window = rowArray(c:c+3);
 			score = score + evaluateWindow(window, piece);
         end
     end
 
 	% Score Vertical
-	for c = 1:7
-		for r = 1:3
-			window = col_array(r:r+4);
-			score = score + evaluateWindow(window, piece);
+    for c = 1:7
+        for r = 1:3
+            colArray = board(:,c);
+            window = colArray(r:r+3);
+            score = score + evaluateWindow(window, piece);
         end
     end
-
-	% Score posiive sloped diagonal
-	for r = 1:3
-		for c= 1:4
-            for i = 1:4
+    
+    % Score posiive sloped diagonal
+    for r = 1:3
+        for c = 1:4
+            for i = 1:3
                 window(i) = board(r+i,c+i);
             end
-	score = score + evaluateWindow(window, piece);
+            score = score + evaluateWindow(window, piece);
         end
     end
-
+    
     for r =1:3
-		for c = 1:4
-            for i = 1:4
+        for c = 1:4
+            for i = 1:3
                 window(i) = board(r+3-i,c+i);
             end
-			
-			score = score + evaluateWindow(window, piece);
+            
+            score = score + evaluateWindow(window, piece);
         end
     end
+    
 
-end

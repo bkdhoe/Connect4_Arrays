@@ -1,7 +1,7 @@
 function [column, value]=minimax(board, depth, alpha, beta, maximizingPlayer)
     validLocations=getValidLocations(board);
     isTerminal=isTerminalNode(board);
-    
+    b = 0;
     AIPiece=2;
     playerPiece=1;
     
@@ -31,13 +31,12 @@ function [column, value]=minimax(board, depth, alpha, beta, maximizingPlayer)
         value=-Inf;
         column = randi(size(validLocations,2));
         for col=validLocations
-            row=canMoveHere(col);
+            row=canPlayHere(col, board);
             boardCopy=board;
             boardCopy(row, col)=AIPiece;
-            newScore=minimax(boardCopy, depth-1, alpha, beta, False);
-            newScore=newScore(2);
+            [b,newScore]=minimax(boardCopy, depth-1, alpha, beta, false);
             if newScore>value
-                value=new_Score;
+                value=newScore;
                 column=col;
             end
             alpha=max(alpha, value);
@@ -50,13 +49,12 @@ function [column, value]=minimax(board, depth, alpha, beta, maximizingPlayer)
         value=-Inf;
         column = randi(size(validLocations,2));
         for col=validLocations
-            row=canMoveHere(col);
+            row=canPlayHere(col, board);
             boardCopy=board;
             boardCopy(row, col)=playerPiece;
-            newScore=minimax(boardCopy, depth-1, alpha, beta, True);
-            newScore=newScore(2);
+            [b,newScore]=minimax(boardCopy, depth-1, alpha, beta, true);
             if newScore<value
-                value=new_Score;
+                value=newScore;
                 column=col;
             end
             beta=min(beta, value);
@@ -66,4 +64,3 @@ function [column, value]=minimax(board, depth, alpha, beta, maximizingPlayer)
         end
         return
     end
-        
