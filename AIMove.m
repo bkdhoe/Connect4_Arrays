@@ -4,7 +4,7 @@
 % Prof. McWilliams
 % Updated: 4/10/2019
 
-% Given the state of the game and the state of the AI, return the move the AI will make
+% Given the state of the game and the state of the AI, return the move the AI should make
 
 function move=AIMove(difficulty, board, player, aggregateMoves, moveNum)
 winMove=immediateWin(board, player);
