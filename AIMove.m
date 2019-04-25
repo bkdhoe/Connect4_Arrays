@@ -38,17 +38,21 @@ if(difficulty==2)
     elseif(opponentWin~=-1)
       	move=opponentWin;
         return;
-    else % maybe modify to look ahead 1 move and not move under win conditions	
-        while(true)
+    else 
+        for i=1:20
         	move=aggregateMoves(moveNum, randi(size(aggregateMoves,2)));
             if(canPlayHere(move, board)~=-1)
-                break;
+                boardPoss = board;
+                boardPoss(canPlayHere(move,board),move) = 2;
+                if immediateWin(boardPoss,opponent)==-1
+                    break;
+                end
             end
         end
     end
 
 end
 if(difficulty == 3)
-   [move , val] = minimax(board, 5, -Inf, Inf, true);
+   [move , val] = minimax(board, 5, -Inf, Inf, true, player);
 end
 end
