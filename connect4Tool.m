@@ -22,7 +22,7 @@ function varargout = connect4Tool(varargin)
 
 % Edit the above text to modify the response to help connect4Tool
 
-% Last Modified by GUIDE v2.5 24-Apr-2019 14:54:27
+% Last Modified by GUIDE v2.5 24-Apr-2019 22:37:21
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -51,33 +51,112 @@ function connect4Tool_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to connect4Tool (see VARARGIN)
-allofthe = [handles.axes1 handles.axes2 handles.axes3 handles.axes4 handles.axes5 handles.axes6, handles.axes7; ...
+handles.axesArray = [handles.axes1 handles.axes2 handles.axes3 handles.axes4 handles.axes5 handles.axes6, handles.axes7; ...
     handles.axes8 handles.axes9 handles.axes10 handles.axes11 handles.axes12 handles.axes13, handles.axes14; ...
     handles.axes15 handles.axes16 handles.axes17 handles.axes18 handles.axes19 handles.axes20, handles.axes21; ...
     handles.axes22 handles.axes23 handles.axes24 handles.axes25 handles.axes26 handles.axes27, handles.axes28; ...
     handles.axes29 handles.axes30 handles.axes31 handles.axes32 handles.axes33 handles.axes34, handles.axes35; ...
     handles.axes36 handles.axes37 handles.axes38 handles.axes39 handles.axes40 handles.axes41, handles.axes42];
 
+handles.field = zeros(6,7);
+handles.moveNum=1;
+handles.pick=0;
+handles.difficulty=0;
+
+for i=1:7
+    handles.aggregateMoves(1:21,i)=i;
+end
+
+numSims=1000                                                                                                                                                                                                                                                                                                    ;
+games=0;
+for(iSims=0:numSims-1)
+    ifWon=0;
+    while ifWon~=1
+        [gameMoves, ifWon]=connect4F(handles.aggregateMoves);
+        games=games+1;
+    end
+    handles.aggregateMoves=[handles.aggregateMoves gameMoves];
+end
+
 axes(handles.axes0)
     %axes(handles.axesi)
-    piece = imread('empty_board.png');
-    image(piece)
+    board = imread('empty_board.png');
+    image(board)
     axis off
     grid off
-    axis image 
+    axis image
     
+
 [piece, map, Palpha] = imread('piece.png');
 
+redPiece = piece;
+%red values
+for i=1:size(redPiece,1)
+    for j=1:size(redPiece,2)
+        %piece(i,j,1) = 0; %black
+        %piece(i,j,1) = 255; %yellow
+        redPiece(i,j,1) = 255; %red
+    end
+end
+%green values
+for i=1:size(redPiece,1)
+    for j=1:size(redPiece,2)
+        %piece(i,j,2) = 0; %black
+        %piece(i,j,2) = 239; %yellow
+        redPiece(i,j,2) = 51; %red
+    end
+end
+%blue values
+for i=1:size(redPiece,1)
+    for j=1:size(redPiece,2)
+        %piece(i,j,3) = 0; %black
+        %piece(i,j,3) = 0; %yellow
+        redPiece(i,j,3) = 51; %red
+    end
+end
+
+yellowPiece = piece;
+%red values
+for i=1:size(yellowPiece,1)
+    for j=1:size(yellowPiece,2)
+        %piece(i,j,1) = 0; %black
+        yellowPiece(i,j,1) = 255; %yellow
+        %piece(i,j,1) = 255; %red
+    end
+end
+%green values
+for i=1:size(yellowPiece,1)
+    for j=1:size(yellowPiece,2)
+        %piece(i,j,2) = 0; %black
+        yellowPiece(i,j,2) = 239; %yellow
+        %piece(i,j,2) = 51; %red
+    end
+end
+%blue values
+for i=1:size(yellowPiece,1)
+    for j=1:size(yellowPiece,2)
+        %piece(i,j,3) = 0; %black
+        yellowPiece(i,j,3) = 0; %yellow
+        %piece(i,j,3) = 51; %red
+    end
+end
+
+%{
 for i = 1:6
     for j=1:7
 axis off
-axes(allofthe(i,j))
+axes(handles.axesArray(i,j))
 
-image(piece, 'AlphaData', Palpha)
+image(piece, 'AlphaData',Palpha)
 axis image
 axis off
     end
 end
+%}
+
+handles.redPiece = redPiece;
+handles.yellowPiece = yellowPiece;
+handles.Palpha = Palpha;
 
 % Choose default command line output for connect4Tool
 handles.output = hObject;
@@ -105,21 +184,34 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-if handles.pushbutton1 == 1
-    pick = 1
+handles.pick=1;
+
+handles1 = Base_V6(handles);
+
+guidata(hObject, handles1);
+
 
 % --- Executes on button press in pushbutton2.
 function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.pick=2;
 
+handles1 = Base_V6(handles);
+
+guidata(hObject, handles1);
 
 % --- Executes on button press in pushbutton3.
 function pushbutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.pick=3;
+
+handles1 = Base_V6(handles);
+
+guidata(hObject, handles1);
 
 
 % --- Executes on button press in pushbutton4.
@@ -127,6 +219,11 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.pick=4;
+
+handles1 = Base_V6(handles);
+
+guidata(hObject, handles1);
 
 
 % --- Executes on button press in pushbutton5.
@@ -134,6 +231,11 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton5 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.pick=5;
+
+handles1 = Base_V6(handles);
+
+guidata(hObject, handles1);
 
 
 % --- Executes on button press in pushbutton6.
@@ -141,6 +243,11 @@ function pushbutton6_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton6 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.pick=6;
+
+handles1 = Base_V6(handles);
+
+guidata(hObject, handles1);
 
 
 % --- Executes on button press in pushbutton7.
@@ -148,3 +255,42 @@ function pushbutton7_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton7 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.pick=7;
+
+handles1 = Base_V6(handles);
+
+guidata(hObject, handles1);
+
+
+% --- Executes on selection change in popupmenu1.
+function popupmenu1_Callback(hObject, eventdata, handles)
+% hObject    handle to popupmenu1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from popupmenu1
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+if handles.popupmenu1.Value == 1
+    handles.difficulty = 0;
+elseif handles.popupmenu1.Value == 2
+    handles.difficulty = 1;
+elseif handles.popupmenu1.Value == 3
+    handles.difficulty = 2;
+elseif handles.popupmenu1.Value == 4
+    handles.difficulty = 3;
+end
+guidata(hObject, handles);
+
+
+% --- Executes during object creation, after setting all properties.
+function popupmenu1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to popupmenu1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
