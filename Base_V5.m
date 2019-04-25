@@ -14,7 +14,7 @@ for(i=1:7)
     aggregateMoves(1:21,i)=i;
 end
 
-numSims=1000;
+numSims=600;
 games=0;
 for(iSims=0:numSims-1)
     ifWon=0;
@@ -25,9 +25,13 @@ for(iSims=0:numSims-1)
   aggregateMoves=[aggregateMoves gameMoves];
 end
 
+
+
 wins=0;
 losses=0;
 draws=0;
+numSims = 1000;
+games = 0;
 for(jSims=0:numSims-1)
   [gameMoves, ifWon]=connect4F(aggregateMoves);
   if ifWon==1
