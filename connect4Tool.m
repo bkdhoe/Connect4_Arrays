@@ -22,7 +22,7 @@ function varargout = connect4Tool(varargin)
 
 % Edit the above text to modify the response to help connect4Tool
 
-% Last Modified by GUIDE v2.5 24-Apr-2019 22:37:21
+% Last Modified by GUIDE v2.5 25-Apr-2019 00:55:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -76,18 +76,20 @@ for(iSims=0:numSims-1)
         games=games+1;
     end
     handles.aggregateMoves=[handles.aggregateMoves gameMoves];
-end
-
-axes(handles.axes0)
-    %axes(handles.axesi)
-    board = imread('empty_board.png');
-    image(board)
-    axis off
-    grid off
-    axis image
-    
+end 
 
 [piece, map, Palpha] = imread('piece.png');
+
+for i = 1:6
+    for j=1:7
+axis off
+axes(handles.axesArray(i,j));
+
+%image(piece, 'AlphaData',Palpha)
+%axis image
+axis off
+    end
+end
 
 redPiece = piece;
 %red values
@@ -141,22 +143,19 @@ for i=1:size(yellowPiece,1)
     end
 end
 
-%{
-for i = 1:6
-    for j=1:7
-axis off
-axes(handles.axesArray(i,j))
-
-image(piece, 'AlphaData',Palpha)
-axis image
-axis off
-    end
-end
-%}
-
 handles.redPiece = redPiece;
 handles.yellowPiece = yellowPiece;
 handles.Palpha = Palpha;
+
+axis off
+    
+axes(handles.axes0)
+    %axes(handles.axesi)
+    board = imread('empty_board.png');
+    image(board)
+    axis off
+    grid off
+    axis image
 
 % Choose default command line output for connect4Tool
 handles.output = hObject;
