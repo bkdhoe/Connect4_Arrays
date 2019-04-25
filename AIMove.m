@@ -6,7 +6,7 @@
 
 function move=AIMove(difficulty, board, player, aggregateMoves, moveNum)
 winMove=immediateWin(board, player);
-
+val = 0;
 if(player==1)
     opponent=2;
 else 
@@ -47,4 +47,8 @@ if(difficulty==2)
         end
     end
 
+end
+if(difficulty == 3)
+   [move , val] = minimax(board, 5, -Inf, Inf, true);
+end
 end

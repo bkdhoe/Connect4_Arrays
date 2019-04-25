@@ -30,8 +30,8 @@ function score =  scorePosition(board, piece)
     % Score posiive sloped diagonal
     for r = 1:3
         for c = 1:4
-            for i = 1:3
-                window(i) = board(r+i,c+i);
+            for i = 0:3
+                window(i+1) = board(r+i,c+i);
             end
             score = score + evaluateWindow(window, piece);
         end
@@ -39,8 +39,8 @@ function score =  scorePosition(board, piece)
     
     for r =1:3
         for c = 1:4
-            for i = 1:3
-                window(i) = board(r+3-i,c+i);
+            for i = 0:3
+                window(i+1) = board(r+3-i,c+i);
             end
             
             score = score + evaluateWindow(window, piece);
