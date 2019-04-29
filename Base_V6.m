@@ -22,6 +22,7 @@ if row ~= -1 && ~gameWon(handles.field,1) && ~gameWon(handles.field,2) && diffic
     
     if gameWon(handles.field,player)
         handles.text2.String = 'You Win!';
+        handles1=handles;
         return;
     end
     
@@ -44,8 +45,12 @@ if row ~= -1 && ~gameWon(handles.field,1) && ~gameWon(handles.field,2) && diffic
         axis off
         if gameWon(handles.field,player)
             handles.text2.String = 'You Lose!';
+            handles1=handles;
+            return;
         elseif handles.moveNum > 21
             handles.text2.String = 'It''s a Draw!';
+            handles1=handles;
+            return;
         end
     end
 end
