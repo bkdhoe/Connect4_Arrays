@@ -4,8 +4,6 @@
 % Prof. McWilliams
 % Updated: 4/10/2019
 
-% Given the state of the game and the state of the AI, return the move the AI should make
-
 function move=AIMove(difficulty, board, player, aggregateMoves, moveNum)
 winMove=immediateWin(board, player);
 val = 0;
@@ -23,7 +21,7 @@ if(difficulty==1)
         return;
     elseif(opponentWin~=-1)
         move=opponentWin;
-    else 
+    else % maybe modify to look ahead 1 move and not move under win conditions
         while(true)
             move=randi(7);
             if(canPlayHere(move, board)~=-1)

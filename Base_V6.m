@@ -27,7 +27,11 @@ if row ~= -1 && ~gameWon(handles.field,1) && ~gameWon(handles.field,2) && diffic
     player=2;
     pick = AIMove(difficulty, handles.field, player, aggregateMoves, handles.moveNum);
     row=canPlayHere(pick,handles.field);
-    if row ~= -1  && ~gameWon(handles.field,1) && ~gameWon(handles.field,2) && difficulty ~= 0
+    while row==-1
+        pick = AIMove(difficulty, handles.field, player, aggregateMoves, handles.moveNum);
+        row=canPlayHere(pick,handles.field);
+    end
+    if ~gameWon(handles.field,1) && ~gameWon(handles.field,2) && difficulty ~= 0
         handles.field(row,pick)=player;
         handles.moveNum = handles.moveNum+1;
         piece = handles.yellowPiece;

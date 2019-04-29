@@ -22,7 +22,7 @@ function varargout = connect4Tool(varargin)
 
 % Edit the above text to modify the response to help connect4Tool
 
-% Last Modified by GUIDE v2.5 25-Apr-2019 00:55:25
+% Last Modified by GUIDE v2.5 29-Apr-2019 14:27:57
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -51,16 +51,6 @@ function connect4Tool_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to connect4Tool (see VARARGIN)
-
-handles.text2.String = "Loading...";
-axes(handles.axes50)
-    %axes(handles.axesi)
-    board = imread('loadingScreen.png');
-    image(board)
-    axis off
-    grid off
-    axis image
-
 handles.axesArray = [handles.axes1 handles.axes2 handles.axes3 handles.axes4 handles.axes5 handles.axes6, handles.axes7; ...
     handles.axes8 handles.axes9 handles.axes10 handles.axes11 handles.axes12 handles.axes13, handles.axes14; ...
     handles.axes15 handles.axes16 handles.axes17 handles.axes18 handles.axes19 handles.axes20, handles.axes21; ...
@@ -98,6 +88,7 @@ axes(handles.axesArray(i,j));
 %image(piece, 'AlphaData',Palpha)
 %axis image
 axis off
+handles.axesArray(i,j).Visible;
     end
 end
 
@@ -159,10 +150,6 @@ handles.Palpha = Palpha;
 
 axis off
     
-%set(handles.axes50,'visible','on')
-set(handles.axes50,'Visible','off')
-%set(findobj(gcf, 'type','axes50'), 'Visible','off')
-handles.axes50.Visible = 0;
 axes(handles.axes0)
     %axes(handles.axesi)
     board = imread('empty_board.png');
@@ -170,7 +157,10 @@ axes(handles.axes0)
     axis off
     grid off
     axis image
-handles.text2.String = "Connect 4";
+    handles.axes0.Visible;
+
+handles.newHandles = handles;
+
 % Choose default command line output for connect4Tool
 handles.output = hObject;
 
@@ -197,6 +187,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
 handles.pick=1;
 
 handles1 = Base_V6(handles);
@@ -307,3 +298,25 @@ function popupmenu1_CreateFcn(hObject, eventdata, handles)
 
 % Hint: popupmenu controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
+
+
+% --- Executes on button press in resetButton.
+function resetButton_Callback(hObject, eventdata, handles)
+% hObject    handle to resetButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles1 = handles.newHandles;
+handles1.newHandles = handles1;
+for i = 1:6
+    for j=1:7
+        axis off
+        axes(handles1.axesArray(i,j));
+        cla
+        axis off
+        %handles1.axesArray(i,j).Visible;
+    end
+end
+handles1.popupmenu1.Value=1;
+handles.text2.String = 'Connect 4';
+
+guidata(hObject, handles1);

@@ -4,8 +4,6 @@
 % Prof. McWilliams
 % Updated: 4/10/2019
 
-% Plays a text-based game of connect4 versus an AI
-
 
 
 % Sets both players to wins of 0
