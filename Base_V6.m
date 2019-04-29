@@ -22,6 +22,7 @@ if row ~= -1 && ~gameWon(handles.field,1) && ~gameWon(handles.field,2) && diffic
     
     if gameWon(handles.field,player)
         handles.text2.String = 'You Win!';
+        return;
     end
     
     player=2;
